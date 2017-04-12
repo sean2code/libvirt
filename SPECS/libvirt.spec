@@ -382,7 +382,7 @@
 Summary: Library providing a simple virtualization API
 Name: libvirt
 Version: 1.2.17
-Release: 13%{?dist}.5.2%{?extra_release}
+Release: 13%{?dist}.5.3%{?extra_release}
 License: LGPLv2+
 Group: Development/Libraries
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
@@ -664,6 +664,7 @@ Patch268: libvirt-qemu-bulk-stats-Don-t-access-possibly-blocked-storage.patch
 
 Patch10000: libvirt-qemu-agent-Fix-QEMU-guest-agent-is-not-available-due-to-an-error.patch
 Patch10001: libvirt-qemu-add-rbd-mirror-dest-in-qemuDomainBlockRebase.patch
+Patch10002: libvirt-qemu-add-sheepdog-mirror-dest-in-qemuDomainBlockRebase.patch
 
 %if %{with_libvirtd}
 Requires: libvirt-daemon = %{version}-%{release}
@@ -2614,6 +2615,9 @@ exit 0
 %doc examples/systemtap
 
 %changelog
+* Mon Apr 12 2017 Zhengyong Wang <wangzhengyong@cmss.chinamobile.com> - 1.2.17-13.el7_2.5.2
+- qemu: Add add sheepdog mirror dest in qemuDomainBlockRebase
+
 * Mon Mar 27 2017 Shengjing Zhu <zhsj@umcloud.com> - 1.2.17-13.el7_2.5.2
 - qemu: Add add rbd mirror dest in qemuDomainBlockRebase
 

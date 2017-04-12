@@ -1,0 +1,40 @@
+From eb541c9fc11481850d71263caf304a97311abd4f Mon Sep 17 00:00:00 2001
+From: wangzhengyong <wangzhengyong@cmss.chinamobile.com>
+Date: Wed, 12 Apr 2017 10:22:06 +0800
+Subject: [PATCH] 
+ libvirt-qemu-add-sheepdog-mirror-dest-in-qemuDomainBlockRebase.patch
+
+---
+ src/qemu/qemu_driver.c | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/src/qemu/qemu_driver.c b/src/qemu/qemu_driver.c
+index 7e0a959..fdee6e1 100644
+--- a/src/qemu/qemu_driver.c
++++ b/src/qemu/qemu_driver.c
+@@ -16739,6 +16739,13 @@ qemuDomainBlockCopyCommon(virDomainObjPtr vm,
+         mirror->type = VIR_STORAGE_TYPE_NETWORK;
+     }
+ 
++
++    if (STRPREFIX(mirror->path, "sheepdog:")) {
++        mirror->format = VIR_STORAGE_FILE_RAW;
++        mirror->protocol = VIR_STORAGE_NET_PROTOCOL_SHEEPDOG;
++        mirror->type = VIR_STORAGE_TYPE_NETWORK;
++    }
++
+     int desttype = virStorageSourceGetActualType(mirror);
+ 
+     /* Preliminaries: find the disk we are editing, sanity checks */
+@@ -16841,7 +16848,7 @@ qemuDomainBlockCopyCommon(virDomainObjPtr vm,
+         virReportError(VIR_ERR_INVALID_ARG,
+                        "%s",
+                        _("only external destination file is supported for "
+-                         "rbd protocol"));
++                         "rbd and sheepdog  protocol"));
+         goto endjob;
+     }
+ 
+-- 
+1.8.3.1
+
